@@ -118,5 +118,48 @@ public class Aes256Util {
     	
         return obj;
     }
+    
+    //암복호화-JSONObject
+    public static JSONObject AES256Func(JSONObject obj) throws java.io.UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+        
+    	logger.info("AES_Encode/Decode Method Call Succeed");
+        
+    	/*
+    	ArrayList<String> params = new ArrayList<String>(); 
+		int objSize = obj.size();
+		String val = "";
+		for(int i=1; i <= objSize; i++) {
+			val = "param" + i;
+			params.add((String) obj.get(val));
+			logger.info("----------- : " + params);
+		}
+		*/
+    	
+    	String param1 = (String)obj.get("param1");
+    	String param2 = (String)obj.get("param2");
+    	
+        byte[] keyData = secretKey.getBytes();
 
+        SecretKey secureKey = new SecretKeySpec(keyData, "AES");
+
+        Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        c.init(Cipher.ENCRYPT_MODE, secureKey, new IvParameterSpec(IV.getBytes()));
+        
+        byte[] encrypted = c.doFinal(param1.getBytes("UTF-8"));
+        String enStr = new String(Base64.encodeBase64(encrypted));
+        
+        c.init(Cipher.DECRYPT_MODE, secureKey, new IvParameterSpec(IV.getBytes("UTF-8")));
+        byte[] byteStr = Base64.decodeBase64(param2.getBytes());
+        String deStr = new String(c.doFinal(byteStr), "UTF-8");
+
+		HashMap<String, Object> hmap = new HashMap<String, Object>();
+		hmap.put("encrypted", enStr);
+		hmap.put("decrypted", deStr);
+		
+		JSONObject result = new JSONObject(hmap);
+		
+    	logger.info("AES_Encode/Decode Method End");
+    	
+        return result;
+    }
 }
