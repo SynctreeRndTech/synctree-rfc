@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="info" monitorInterval="30">
     <Properties>
-        <Property name="LOG_FORMAT">%d{yyyy-MM-dd HH:mm:ss} %p %m%n</Property>
-        <Property name="BASE_DIR">\project\Logging</Property>
+        <Property name="LOG_FORMAT">%style{%d{yyyy-MM-dd HH:mm:ss}}{cyan} %highlight{[%-5level]}{FATAL=bg_red, ERROR=red,
+            INFO=green, DEBUG=blue} [%C] - %msg%n</Property>
+        <Property name="BASE_DIR">.\logs</Property>
     </Properties>
 
     <Appenders>
@@ -10,8 +11,7 @@
             <PatternLayout pattern="${LOG_FORMAT}"/>
         </Console>
         <RollingFile name="File"
-                     fileName="${BASE_DIR}/bootdemo.log"
-                     filePattern="${BASE_DIR}/bootdemo.%d{yyyyMMdd}.log">
+                     fileName="${BASE_DIR}/service_${date:yyyyMMdd}.log" filePattern="${BASE_DIR}/$${date:yyyy-MM}/service-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout pattern="${LOG_FORMAT}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy />
