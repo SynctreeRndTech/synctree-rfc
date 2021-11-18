@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="info" monitorInterval="30">
     <Properties>
-        <Property name="LOG_FORMAT">%style{%d{yyyy-MM-dd HH:mm:ss}}{cyan} %highlight{[%-5level]}{FATAL=bg_red, ERROR=red,
-            INFO=green, DEBUG=blue} [%C] - %msg%n</Property>
+        <Property name="LOG_FORMAT">%style{%d{yyyy-MM-dd HH:mm:ss}}{cyan} %highlight{${LOG_LEVEL_PATTERN:-%5p}}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} [%C] - %msg%n</Property>
         <Property name="BASE_DIR">.\logs</Property>
     </Properties>
 

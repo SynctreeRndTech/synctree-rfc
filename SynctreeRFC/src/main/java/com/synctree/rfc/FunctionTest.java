@@ -4,6 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 
+import com.synctree.framewok.rfc.RFCController;
+import com.synctree.util.Aes256Util;
+
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -15,7 +18,7 @@ import javax.crypto.NoSuchPaddingException;
 
 public class FunctionTest implements RemoteFunction{
 
-	static final Logger logger = LogManager.getLogger(RemoteFunctionCall.class);
+	static final Logger logger = LogManager.getLogger(RFCController.class);
 	
 	public JSONObject remoteFunction(JSONObject obj) {
 
