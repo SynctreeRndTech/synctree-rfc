@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.synctree.mapper.InsureMapper">
+
+	<select id="retrievePremium" resultType="HashMap">
+		SELECT pr.prod_id, ROUND((pr.premium_value-pr.premium_value*pe.rate_value), -1) AS premium
+		FROM rfc.travel_insure_premium pr 
+		INNER JOIN rfc.rate_by_period pe
+		ON pr.age = #{age}
+		AND pr.gender_type = #{gender}
+		AND pr.prod_id = pe.prod_id
+		AND pe.rate_date = #{period}
+	</select>
+	
+	<select id="retrieveCustId" resultType="String">
+		SELECT cust_id FROM rfc.customer_info
+		WHERE cust_nm_ko = #{custNameKo} AND cust_mobile = #{phoneNum} AND cust_reg_num = #{registNum}
+	</select>
+	
+	<insert id="insertNewCustomerInfo">
+		INSERT INTO rfc.customer_info (cust_nm_ko, cust_mobile, cust_nm_en, cust_gender, cust_age ,cust_reg_num, cust_email, reg_dt)
+		VALUES (#{custNameKo}, #{phoneNum}, #{custNameEn}, #{gender}, #{age}, #{registNum}, #{email}, now())
+	</insert>
+	
+	<insert id="takeOutInsurance">
+		INSERT INTO rfc.contract_info (cust_id, prod_id, cust_nm_ko, cust_mobile, reg_start_dt, reg_end_dt, reg_total_dt, total_premium_value, coupon_use_yn, pay_method, contract_status_code, reg_dt)
+		VALUES(#{custID}, #{prodType}, #{custNameKo}, #{phoneNum}, #{startDate}, #{endDate}, #{period}, #{totalPrice}, #{couponUseYn}, #{payMethod}, #{contractStatusCode},  now());
+	</insert>
+
+	<select id="retrieveProdName" resultType="HashMap">
+		SELECT prod_name FROM rfc.travel_insure_product
+		WHERE prod_id = #{prodType}
+	</select>
+	
+	<delete id="deleteAccount">
+		DELETE FROM rfc.customer_info WHERE cust_id= #{custID} AND cust_nm_ko = #{custNameKo} AND cust_mobile = #{phoneNum} AND cust_reg_num = #{registNum}
+	</delete>
+</mapper>
+
+
