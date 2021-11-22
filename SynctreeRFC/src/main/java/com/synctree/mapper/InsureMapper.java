@@ -2,7 +2,6 @@ package com.synctree.mapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.logging.log4j.LogManager;
@@ -21,5 +20,6 @@ public interface InsureMapper {
 	public ArrayList<String> retrieveCustId(InsureDTO dto);
 	public Integer insertNewCustomerInfo(InsureDTO dto);
 	public Integer takeOutInsurance(InsureDTO dto);
-	public ArrayList<HashMap<String, String>> retrieveProdName(InsureDTO dto);
+	public ArrayList<HashMap<String, Object>> retrieveProdName(InsureDTO dto);
+
 }
