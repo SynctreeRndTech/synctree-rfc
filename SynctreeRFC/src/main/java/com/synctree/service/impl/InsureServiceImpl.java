@@ -1,5 +1,6 @@
 package com.synctree.service.impl;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -11,7 +12,6 @@ import java.util.HashMap;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -111,13 +111,17 @@ public class InsureServiceImpl implements InsureService {
 				}
 			}
 		}
-			
-		//가입상품명 조회
+
+		//가입상품명, 계약식별번호 조회
 		if(takeOutResult > 0) {
-			ArrayList<HashMap<String, String>> prodInfo = insureMapper.retrieveProdName(dto);
+			ArrayList<HashMap<String, Object>> prodInfo = insureMapper.retrieveProdName(dto);
+			
+			logger.debug(prodInfo.get(0).get("contract_id").toString());
+			logger.debug(prodInfo.get(0).get("prod_name").toString());
 			
 			res.put("resultCode", "S001");
-			res.put("productName", prodInfo.get(0).get("prod_name"));
+			res.put("contractID", prodInfo.get(0).get("contract_id").toString());
+			res.put("productName", prodInfo.get(0).get("prod_name").toString());
 			res.put("contractStatusCode", dto.getContractStatusCode());
 			
 			result.add(res);

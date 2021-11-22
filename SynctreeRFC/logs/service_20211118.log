@@ -20703,3 +20703,6 @@ java.lang.NoClassDefFoundError: com/synctree/framewok/rfc/RemoteFunctionDTO (wro
 2021-11-18 16:08:55  INFO [com.synctree.service.impl.InsureServiceImpl] - [TakeOutInsurance Business Logic End]
 2021-11-18 16:08:55  INFO [com.synctree.framewok.rfc.InsureHandler] - InsureDTO [startDate=2021-11-10, endDate=2021-11-15, birthDate=null, gender=F, prodType=TR0001, period=5, age=33, totalPrice=10780, payMethod=card, couponUseYn=N, contractStatusCode=001, custID=1000000173, custNameKo=김나라, custNameEn=Nara Kim, registNum=8802022978543, phoneNum=01055554444, email=nara@ntuple.com, result=[{resultCode=S001, contractStatusCode=001, productName=참좋은 여행자 보험}]]
 2021-11-18 16:08:55  INFO [com.synctree.framewok.rfc.InsureHandler] - [TakeOutInsurance Method End]
+2021-11-18 17:00:05  INFO [org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin] - Application shutdown requested.
+2021-11-18 17:00:05  INFO [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown initiated...
+2021-11-18 17:00:05  INFO [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown completed.

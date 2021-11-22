@@ -12,7 +12,7 @@ public class RfcDTO {
 	private ArrayList<String> param3;
 	private JSONObject jsonObj; 
 	private String key;
-	
+
 	public String getParam1() {
 		return param1;
 	}

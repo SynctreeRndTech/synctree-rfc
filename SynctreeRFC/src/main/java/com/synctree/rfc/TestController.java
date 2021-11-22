@@ -1,16 +1,9 @@
 package com.synctree.rfc;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+
 import java.util.HashMap;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
@@ -25,6 +18,53 @@ public class TestController {
 	private static final Logger logger = LogManager.getLogger(TestController.class);
 	
 	
+	@PostMapping("/partner/retreive/contractid") 
+	public HashMap<String, Object> partnerRetrieveContractId(){
+		
+		logger.info("[PartnerRetrieveContractId Start]");
+		
+        GenerateCertNumber num = new GenerateCertNumber();
+        num.setCertNumLength(5);
+ 		String contractID = "H00";
+ 		contractID += num.excuteGenerate();
+ 		contractID += "VS";
+ 		
+		logger.info("[partner_contract_id generated] :: " + contractID);
+		
+		HashMap<String, Object> hmap = new HashMap<String, Object>();
+		hmap.put("partner_contract_id", contractID);
+		
+		logger.info("[PartnerRetrieveContractId End]");
+		
+		return hmap;
+	}
+	
+	public class GenerateCertNumber{
+	    private int certNumLength = 10;
+	    
+	    public String excuteGenerate() {
+	        Random random = new Random(System.currentTimeMillis());
+	        
+	        int range = (int)Math.pow(7,certNumLength);
+	        int trim = (int)Math.pow(7, certNumLength-1);
+	        int result = random.nextInt(range)+trim;
+	         
+	        if(result>range){
+	            result = result - trim;
+	        }
+	        
+	        return String.valueOf(result);
+	    }
+
+	    public int getCertNumLength() {
+	        return certNumLength;
+	    }
+
+	    public void setCertNumLength(int certNumLength) {
+	        this.certNumLength = certNumLength;
+	    }
+	}
+	    
 	@GetMapping("/") 
 	public String main(String[] args) {
 		logger.info("Call succeed");

@@ -17,7 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 
-import com.synctree.framewok.rfc.RFCController;
+import com.synctree.framework.rfc.RFCController;
 
 public class Aes256Util {
 	

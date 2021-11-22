@@ -28,8 +28,9 @@
 	</insert>
 
 	<select id="retrieveProdName" resultType="HashMap">
-		SELECT prod_name FROM rfc.travel_insure_product
-		WHERE prod_id = #{prodType}
+		SELECT info.contract_id, prod.prod_name
+		FROM rfc.travel_insure_product as prod, (SELECT contract_id, prod_id FROM rfc.contract_info WHERE cust_id = #{custID} ORDER BY reg_start_dt LIMIT 1) as info
+		WHERE prod.prod_id = #{prodType}
 	</select>
 	
 	<delete id="deleteAccount">
