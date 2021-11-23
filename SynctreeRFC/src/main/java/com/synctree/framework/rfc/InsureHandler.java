@@ -4,11 +4,9 @@ import java.util.HashMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
-import org.springframework.stereotype.Service;
 import com.synctree.dto.InsureDTO;
 import com.synctree.service.impl.InsureServiceImpl;
 
-@Service
 public class InsureHandler{
 
 	private static final Logger logger = LogManager.getLogger(RFCController.class);
