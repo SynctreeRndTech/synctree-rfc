@@ -41,7 +41,7 @@ public class UtilHandler {
     }
     
     //암복호화
-    public static JSONObject AES256Func(RemoteFunctionDTO dto) throws java.io.UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+    public static JSONObject AES256Func(RfcDTO dto) throws java.io.UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
         
     	logger.info("AES_Encode/Decode Method Call Succeed");
         

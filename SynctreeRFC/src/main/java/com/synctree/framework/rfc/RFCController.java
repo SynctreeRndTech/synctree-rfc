@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -39,7 +40,7 @@ public class RFCController {
 		OutputStream os = null;
 		JSONObject paramObj = new JSONObject();
 		JSONObject result = new JSONObject();
-		RemoteFunctionDTO rfcDto = new RemoteFunctionDTO();
+		RfcDTO rfcDto = new RfcDTO();
 		ArrayList<String> paramArr = new ArrayList<>();
 
 		/* 보안 프로토콜 */
@@ -133,7 +134,7 @@ public class RFCController {
 				e.printStackTrace();
 			}
 
-			Class<?> dtoCls = Class.forName("com.synctree.framework.rfc.RemoteFunctionDTO");
+			Class<?> dtoCls = Class.forName("com.synctree.framework.rfc.RfcDTO");
 
 			for (int i = 0; i < paramArr.size(); i++) {
 				String paramName = paramArr.get(i);
@@ -152,7 +153,19 @@ public class RFCController {
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
 			logger.error("InvocationTargetExceptionn from invoke()");
-			e.printStackTrace();
+			e.printStackTrace();	
+			String getCause = e.getCause().toString();
+			String checkCause = getCause.substring(24, 36);
+			//RMI로 SQLException이 여기서만 잡혀서 임시 처리, 방법 모색
+			if (checkCause.equals("DuplicateKey")) {
+				ArrayList<HashMap<String, Object>> temp = new ArrayList<HashMap<String, Object>>();
+				HashMap<String, Object> hash = new HashMap<String, Object>();
+				hash.put("resultCode", "E001");
+				hash.put("resultMessage", "이미 가입한 상품입니다.");
+				temp.add(0, hash);
+				result.put("res", temp);
+				logger.info(result.toJSONString());
+			}
 		} catch (IllegalAccessException e) {
 			logger.error("IllegalAccessException from invoke()");
 			e.printStackTrace();
