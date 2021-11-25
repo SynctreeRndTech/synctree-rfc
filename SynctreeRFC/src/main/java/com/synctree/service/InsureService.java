@@ -8,7 +8,7 @@ import com.synctree.dto.InsureDTO;
 
 public interface InsureService {
 	
-	public ArrayList<HashMap<String, String>> retrievePremium(InsureDTO dto);
+	public ArrayList<HashMap<String, String>> retrievePremium(InsureDTO dto) throws SQLException;
 
 	public ArrayList<HashMap<String, String>> takeOutInsurance(InsureDTO dto) throws SQLException;
 }

@@ -1,5 +1,6 @@
 package com.synctree.framework.rfc;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +16,7 @@ public class InsureHandler{
 	static InsureServiceImpl insureService = ApplicationContextHolder.getContext().getBean(InsureServiceImpl.class);
 	
 	//보험료 조회 서비스 호출
-	public JSONObject retrievePremium(RemoteFunctionDTO dto) {
+	public JSONObject retrievePremium(RfcDTO dto) {
 		
 		logger.info("[RetrievePremium Method Call suceed]");
 
@@ -29,11 +30,26 @@ public class InsureHandler{
 		insureDto.setProdType(dto.req.get("prodType").toString());
 		
 		// 비즈니스 로직 호출
-		insureDto.setResult(insureService.retrievePremium(insureDto));
+		//insureDto.setResult(insureService.retrievePremium(insureDto));
 
+		ArrayList<HashMap<String, String>> retreiveResult = insureService.retrievePremium(insureDto);
+		
+		HashMap<String, Object> tempHash = new HashMap<String, Object>();
+		tempHash.put("resultCode", "S001");
+		tempHash.put("startDate", insureDto.getStartDate());
+		tempHash.put("startTime", dto.req.get("startTime").toString());
+		tempHash.put("endDate", insureDto.getEndDate());
+		tempHash.put("endTime", dto.req.get("endTime").toString());
+		tempHash.put("period", insureDto.getPeriod());
+		tempHash.put("birthDate", insureDto.getBirthDate());
+		tempHash.put("age", insureDto.getAge());
+		tempHash.put("premium_value", retreiveResult);
+		
 		//응답 셋팅
 		JSONObject result = new JSONObject();
-		result.put("res", insureDto.getResult());
+		result.put("res", tempHash);
+		
+		logger.info("여가~~" + result.toString());
 		
 		logger.info(insureDto.toString());
 		logger.info("[RetrievePremium Method End]");
@@ -42,7 +58,7 @@ public class InsureHandler{
 	}
 
 	// 보험료 가입 서비스 호출
-	public static JSONObject takeOutInsurance(RemoteFunctionDTO dto) {
+	public static JSONObject takeOutInsurance(RfcDTO dto) {
 
 		logger.info("[TakeOutInsurance Method Call suceed]");
 

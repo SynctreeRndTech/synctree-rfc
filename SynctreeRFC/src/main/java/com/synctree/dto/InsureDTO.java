@@ -2,7 +2,6 @@ package com.synctree.dto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class InsureDTO {
 	

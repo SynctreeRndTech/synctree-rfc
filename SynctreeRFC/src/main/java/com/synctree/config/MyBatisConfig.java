@@ -1,8 +1,6 @@
 package com.synctree.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -18,11 +16,8 @@ import org.springframework.context.annotation.Configuration;
 import javax.sql.DataSource;
 
 @Configuration
-// 패키지명 
 @MapperScan(basePackages = {"com.synctree.mapper"}, sqlSessionFactoryRef = "SqlSessionFactory")
 public class MyBatisConfig {
-
-	private static final Logger logger = LogManager.getLogger(MyBatisConfig.class);
 	
     @Value("${mybatis.mapper-locations}")
     String mPath;
