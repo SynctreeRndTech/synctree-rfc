@@ -17,7 +17,7 @@ public class TestController {
 	
 	private static final Logger logger = LogManager.getLogger(TestController.class);
 	
-	
+	//제휴사계약번호 임시생성
 	@PostMapping("/partner/retreive/contractid") 
 	public HashMap<String, Object> partnerRetrieveContractId(){
 		
