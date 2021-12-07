@@ -1,4 +1,4 @@
-package com.synctree.framework.rfc;
+package com.synctree.rfc.framework;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

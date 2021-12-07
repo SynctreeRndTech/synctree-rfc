@@ -1,11 +1,10 @@
-package com.synctree.framework.rfc;
+package com.synctree.rfc.framework;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
@@ -35,13 +34,24 @@ public class RFCController {
 	public JSONObject remoteFunctionCall(@RequestHeader(value = "functionName") String functionName, @RequestHeader(value = "className") String className, @RequestHeader(value = "protocolUrl") String protocolUrl,
 										 @RequestHeader(value = "X-Synctree-Secure-Key") String secKey, @RequestHeader(value = "X-Synctree-Verification-Code") String verifyCode) throws NoSuchFieldException, SecurityException {
 
+			
+		// 보안프로토콜로 통신하기
+		JSONObject paramObj = new JSONObject();		
+		paramObj = callWithSecureProtocol(functionName, className, protocolUrl, secKey, verifyCode, /*out*/ paramObj);		
+		
+		// 동적 매소드 호출하기 -handler method 호출
+		return callDynamicMethod(functionName, className, paramObj);		
+	}
+	
+	public JSONObject callWithSecureProtocol( String functionName, 
+											  String className, 
+											  String protocolUrl, 
+											  String secKey, 
+											  String verifyCode, 
+											  /*out*/ JSONObject paramObj) {
 		String responseData = "";
 		HttpURLConnection conn = null;
 		OutputStream os = null;
-		JSONObject paramObj = new JSONObject();
-		JSONObject result = new JSONObject();
-		RfcDTO rfcDto = new RfcDTO();
-		ArrayList<String> paramArr = new ArrayList<>();
 
 		/* 보안 프로토콜 */
 		try {
@@ -96,14 +106,8 @@ public class RFCController {
 
 				JSONParser parser = new JSONParser();
 				try {
+					
 					paramObj = (JSONObject) parser.parse(sb.toString());
-					Set<?> key = paramObj.keySet();
-					Iterator<?> iter = key.iterator();
-
-					while (iter.hasNext()) {
-						String paramName = iter.next().toString();
-						paramArr.add(paramName);
-					}
 
 				} catch (ParseException e) {
 					e.printStackTrace();
@@ -120,8 +124,17 @@ public class RFCController {
 				conn.disconnect();
 			}
 		}
-
-		/* RMI */
+		
+		return paramObj;
+	}
+	
+	public JSONObject callDynamicMethod(String functionName, String className, JSONObject paramObj) throws NoSuchFieldException {
+	
+		Object methodResult = new Object();
+		JSONObject res = new JSONObject();
+		RfcDTO rfcDto = new RfcDTO();
+		
+		/* 동적 호출 */
 		try {
 			Class<?> cls = Class.forName(className);
 			Constructor<?> constructor = cls.getConstructor(new Class[] {});
@@ -134,17 +147,13 @@ public class RFCController {
 				e.printStackTrace();
 			}
 
-			Class<?> dtoCls = Class.forName("com.synctree.framework.rfc.RfcDTO");
-
-			for (int i = 0; i < paramArr.size(); i++) {
-				String paramName = paramArr.get(i);
-				Field field = dtoCls.getField(paramName);
-				field.set(rfcDto, paramObj.get(paramName));
-			}
-
+			Class<?> dtoCls = Class.forName("com.synctree.rfc.framework.RfcDTO");
+			rfcDto.setReq((HashMap<String, Object>) paramObj.get("req"));
 			Method m = cls.getDeclaredMethod(functionName, dtoCls);
-			result = (JSONObject) m.invoke(rfcObj, rfcDto);
+			methodResult = m.invoke(rfcObj, rfcDto);
 
+			res.put("res", methodResult);
+			
 		} catch (ClassNotFoundException e) {
 			logger.error("ClassNotFoundException from Class.forName()");
 			e.printStackTrace();
@@ -163,15 +172,15 @@ public class RFCController {
 				hash.put("resultCode", "E001");
 				hash.put("resultMessage", "이미 가입한 상품입니다.");
 				temp.add(0, hash);
-				result.put("res", temp);
-				logger.info(result.toJSONString());
+				res.put("res", temp);
+				logger.info(res.toJSONString());
 			}
 		} catch (IllegalAccessException e) {
 			logger.error("IllegalAccessException from invoke()");
 			e.printStackTrace();
-		}
+		}		
 
-		return result;
-	}
+		return res;
+	}	
 
 }

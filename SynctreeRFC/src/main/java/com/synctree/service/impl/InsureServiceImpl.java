@@ -40,7 +40,7 @@ public class InsureServiceImpl implements InsureService {
 
 			// Date로 변환된 두 날짜를 계산한 뒤 그 리턴값으로 long type 변수를 초기화
 			// 연산결과 -950400000. long type 으로 return
-			long calDate = date1.getTime() - date2.getTime();
+			long calDate = date2.getTime() - date1.getTime();
 
 			// Date.getTime() 은 해당날짜를 기준으로 1970년 00:00:00 부터 몇 초가 흘렀는지를 반환
 			// 24*60*60*1000(각 시간값에 따른 차이점) 을 나눠주면 일수
