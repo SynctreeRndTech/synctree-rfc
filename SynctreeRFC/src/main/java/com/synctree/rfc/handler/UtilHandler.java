@@ -1,4 +1,4 @@
-package com.synctree.framework.rfc;
+package com.synctree.rfc.handler;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -18,6 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 
+import com.synctree.rfc.framework.RfcDTO;
 import com.synctree.util.Aes256Util;
 
 public class UtilHandler {
@@ -52,11 +53,14 @@ public class UtilHandler {
         Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
         c.init(Cipher.ENCRYPT_MODE, secureKey, new IvParameterSpec(IV.getBytes()));
         
-        byte[] encrypted = c.doFinal(dto.str1.getBytes("UTF-8"));
+        String str1 = (String) dto.req.get("str1");
+        String str2 = (String) dto.req.get("str2");
+        
+        byte[] encrypted = c.doFinal(str1.getBytes("UTF-8"));
         String enStr = new String(Base64.encodeBase64(encrypted));
         
         c.init(Cipher.DECRYPT_MODE, secureKey, new IvParameterSpec(IV.getBytes("UTF-8")));
-        byte[] byteStr = Base64.decodeBase64(dto.str2.getBytes());
+        byte[] byteStr = Base64.decodeBase64(str2.getBytes());
         String deStr = new String(c.doFinal(byteStr), "UTF-8");
 
 		HashMap<String, Object> hmap = new HashMap<String, Object>();

@@ -1,11 +1,16 @@
-package com.synctree.framework.rfc;
+package com.synctree.rfc.handler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import com.synctree.dto.InsureDTO;
+import com.synctree.rfc.framework.ApplicationContextHolder;
+import com.synctree.rfc.framework.RFCController;
+import com.synctree.rfc.framework.RfcDTO;
 import com.synctree.service.impl.InsureServiceImpl;
 
 public class InsureHandler{
@@ -16,7 +21,7 @@ public class InsureHandler{
 	static InsureServiceImpl insureService = ApplicationContextHolder.getContext().getBean(InsureServiceImpl.class);
 	
 	//보험료 조회 서비스 호출
-	public JSONObject retrievePremium(RfcDTO dto) {
+	public static Object retrievePremium(RfcDTO dto) {
 		
 		logger.info("[RetrievePremium Method Call suceed]");
 
@@ -30,8 +35,6 @@ public class InsureHandler{
 		insureDto.setProdType(dto.req.get("prodType").toString());
 		
 		// 비즈니스 로직 호출
-		//insureDto.setResult(insureService.retrievePremium(insureDto));
-
 		ArrayList<HashMap<String, String>> retreiveResult = insureService.retrievePremium(insureDto);
 		
 		HashMap<String, Object> tempHash = new HashMap<String, Object>();
@@ -45,20 +48,14 @@ public class InsureHandler{
 		tempHash.put("age", insureDto.getAge());
 		tempHash.put("premium_value", retreiveResult);
 		
-		//응답 셋팅
-		JSONObject result = new JSONObject();
-		result.put("res", tempHash);
-		
-		logger.info("여가~~" + result.toString());
-		
 		logger.info(insureDto.toString());
 		logger.info("[RetrievePremium Method End]");
 
-		return result;
+		return tempHash;
 	}
 
 	// 보험료 가입 서비스 호출
-	public static JSONObject takeOutInsurance(RfcDTO dto) {
+	public static Object takeOutInsurance(RfcDTO dto) {
 
 		logger.info("[TakeOutInsurance Method Call suceed]");
 
@@ -89,15 +86,10 @@ public class InsureHandler{
 		// 비즈니스 로직 호출
 		insureDto.setResult(insureService.takeOutInsurance(insureDto));
 		
-		// 응답값 셋팅
-
-		JSONObject result = new JSONObject();
-		result.put("res", insureDto.getResult());
-		
 		logger.info(insureDto.toString());
 		logger.info("[TakeOutInsurance Method End]");
 
-		return result;
+		return insureDto.getResult();
 	}
 
 }
