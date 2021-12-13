@@ -12,9 +12,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
@@ -39,7 +36,7 @@ public class RFCController {
 		JSONObject paramObj = new JSONObject();		
 		paramObj = callWithSecureProtocol(functionName, className, protocolUrl, secKey, verifyCode, /*out*/ paramObj);		
 		
-		// 동적 매소드 호출하기 -handler method 호출
+		// 동적 매소드 호출하기-handler method 호출
 		return callDynamicMethod(functionName, className, paramObj);		
 	}
 	

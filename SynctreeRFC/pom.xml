@@ -16,9 +16,10 @@
 	<description>Synctree RFC</description>
 	<properties>
 		<java.version>1.8</java.version>
-
 		<!-- Maven Configuration Problem 해결 -->
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+		<!-- Log4j2 Version Upgrade for Log4j shell -->
+		<log4j2.version>2.15.0</log4j2.version>
 	</properties>
 	<dependencies>
 		<dependency>
