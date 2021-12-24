@@ -4,12 +4,6 @@ import java.util.HashMap;
 
 public class RfcDTO {
 
-		
-//		public String str1;
-//		public String str2;
-		
-		
-//      public HashMap<String, Object> req;
 		public HashMap<String, Object> req;
 
 
