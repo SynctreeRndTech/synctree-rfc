@@ -27,7 +27,7 @@ public class UtilHandler {
 	
     private static volatile Aes256Util INSTANCE;
     final static String secretKey = "jtpcq128365ekdjalekfj57168578903"; //32bit
-    private static String IV = secretKey.substring(0, 16);//16bit
+    private static String IV = secretKey.substring(0, 16); //16bit
 
 
 
@@ -46,16 +46,16 @@ public class UtilHandler {
         
     	logger.info("AES_Encode/Decode Method Call Succeed");
         
+        String str1 = (String) dto.req.get("str1");
+        String str2 = (String) dto.req.get("str2");
+        
         byte[] keyData = secretKey.getBytes();
 
         SecretKey secureKey = new SecretKeySpec(keyData, "AES");
 
         Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
         c.init(Cipher.ENCRYPT_MODE, secureKey, new IvParameterSpec(IV.getBytes()));
-        
-        String str1 = (String) dto.req.get("str1");
-        String str2 = (String) dto.req.get("str2");
-        
+               
         byte[] encrypted = c.doFinal(str1.getBytes("UTF-8"));
         String enStr = new String(Base64.encodeBase64(encrypted));
         
@@ -64,8 +64,8 @@ public class UtilHandler {
         String deStr = new String(c.doFinal(byteStr), "UTF-8");
 
 		HashMap<String, Object> hmap = new HashMap<String, Object>();
-		hmap.put("encrypted", enStr);
-		hmap.put("decrypted", deStr);
+		hmap.put("Encrypted", enStr);
+		hmap.put("Decrypted", deStr);
 		
 		JSONObject obj = new JSONObject(hmap);
 		

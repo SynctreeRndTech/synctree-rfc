@@ -54,7 +54,7 @@ public class InsureHandler{
 	// 보험료 가입 서비스 호출
 	public static Object takeOutInsurance(RfcDTO dto) {
 
-		logger.info("[TakeOutInsurance Method Call suceed]");
+		logger.info("[TakeOutInsurance Method Call succeed]");
 
 		//인자값 셋팅
 		InsureDTO insureDto = new InsureDTO();

@@ -10,7 +10,6 @@ import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.HashMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,11 +31,11 @@ public class RFCController {
 										 @RequestHeader(value = "X-Synctree-Secure-Key") String secKey, @RequestHeader(value = "X-Synctree-Verification-Code") String verifyCode) throws NoSuchFieldException, SecurityException {
 
 			
-		// 보안프로토콜로 통신하기
+		/* 보안 프로토콜 통신 */
 		JSONObject paramObj = new JSONObject();		
 		paramObj = callWithSecureProtocol(functionName, className, protocolUrl, secKey, verifyCode, /*out*/ paramObj);		
 		
-		// 동적 매소드 호출하기-handler method 호출
+		/* 동적 매소드 호출 - Handler Method */
 		return callDynamicMethod(functionName, className, paramObj);		
 	}
 	
@@ -58,7 +57,6 @@ public class RFCController {
 			logger.info("[X-Synctree-Secure-Key]: " + secKey);
 			logger.info("[X-Synctree-Verification-Code]: " + verifyCode);
 
-			// URL url = new URL("https://seoul.synctreengine.com/secure/getCommand"); //실서버
 			URL url = new URL(protocolUrl);
 			
 			conn = (HttpURLConnection) url.openConnection();
@@ -160,18 +158,6 @@ public class RFCController {
 		} catch (InvocationTargetException e) {
 			logger.error("InvocationTargetExceptionn from invoke()");
 			e.printStackTrace();	
-			String getCause = e.getCause().toString();
-			String checkCause = getCause.substring(24, 36);
-			//RMI로 SQLException이 여기서만 잡혀서 임시 처리, 방법 모색
-			if (checkCause.equals("DuplicateKey")) {
-				ArrayList<HashMap<String, Object>> temp = new ArrayList<HashMap<String, Object>>();
-				HashMap<String, Object> hash = new HashMap<String, Object>();
-				hash.put("resultCode", "E001");
-				hash.put("resultMessage", "이미 가입한 상품입니다.");
-				temp.add(0, hash);
-				res.put("res", temp);
-				logger.info(res.toJSONString());
-			}
 		} catch (IllegalAccessException e) {
 			logger.error("IllegalAccessException from invoke()");
 			e.printStackTrace();
