@@ -2,17 +2,16 @@ package com.synctree.rfc.handler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import com.synctree.dto.InsureDTO;
 import com.synctree.rfc.framework.ApplicationContextHolder;
-import com.synctree.rfc.framework.RFCController;
 import com.synctree.rfc.framework.RfcDTO;
 import com.synctree.service.impl.InsureServiceImpl;
+import com.synctree.util.logging.SynctreeLogger;
 
 public class InsureHandler{
 
-	private static final Logger logger = LogManager.getLogger(RFCController.class);
+	private static final SynctreeLogger logger = new SynctreeLogger(InsureHandler.class.getName());
 	
 	//RMI 방식으로 인해 Bean을 수동으로 조회
 	static InsureServiceImpl insureService = ApplicationContextHolder.getContext().getBean(InsureServiceImpl.class);

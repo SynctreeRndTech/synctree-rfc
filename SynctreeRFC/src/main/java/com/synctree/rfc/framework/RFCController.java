@@ -11,8 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -20,10 +19,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.synctree.util.logging.SynctreeLogger;
+
 @RestController
 public class RFCController {
 
-	private static final Logger logger = LogManager.getLogger(RFCController.class);
+	private static final SynctreeLogger logger = new SynctreeLogger(RFCController.class.getName());
 
 	/* param=JSONObject */
 	@PostMapping("/synctree/rfc")
