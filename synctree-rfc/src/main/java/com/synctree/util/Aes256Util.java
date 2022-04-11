@@ -1,5 +1,10 @@
 package com.synctree.util;
 
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -7,21 +12,15 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.security.InvalidAlgorithmParameterException;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 
-import com.synctree.rfc.framework.RFCController;
+import com.synctree.util.logging.SynctreeLogger;
 
 public class Aes256Util {
 	
-	private static final Logger logger = LogManager.getLogger(RFCController.class);
+	private static final SynctreeLogger logger = new SynctreeLogger(Aes256Util.class.getName());
 
     private static volatile Aes256Util INSTANCE;
     final static String secretKey = "jtpcq128365ekdjalekfj57168578903"; //32bit

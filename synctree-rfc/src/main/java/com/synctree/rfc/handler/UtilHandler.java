@@ -14,16 +14,15 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 
 import com.synctree.rfc.framework.RfcDTO;
 import com.synctree.util.Aes256Util;
+import com.synctree.util.logging.SynctreeLogger;
 
 public class UtilHandler {
 	
-	private static final Logger logger = LogManager.getLogger(UtilHandler.class);
+	private static final SynctreeLogger logger = new SynctreeLogger(UtilHandler.class.getName());
 	
     private static volatile Aes256Util INSTANCE;
     final static String secretKey = "jtpcq128365ekdjalekfj57168578903"; //32bit

@@ -3,18 +3,17 @@ package com.synctree.controller;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.synctree.util.logging.SynctreeLogger;
 
 @org.springframework.web.bind.annotation.RestController
 public class TestController {
-
-	private static final Logger logger = LogManager.getLogger(TestController.class);
+	private static final SynctreeLogger logger = new SynctreeLogger(TestController.class.getName());
 
 	// 제휴사계약번호 임시생성
 	@PostMapping("/partner/retreive/contractid")

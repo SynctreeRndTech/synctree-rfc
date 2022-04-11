@@ -8,19 +8,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.synctree.dto.InsureDTO;
 import com.synctree.mapper.InsureMapper;
 import com.synctree.service.InsureService;
+import com.synctree.util.logging.SynctreeLogger;
 
 @Service
 public class InsureServiceImpl implements InsureService {
 
-	private static final Logger logger = LogManager.getLogger(InsureServiceImpl.class);
+	private static final SynctreeLogger logger = new SynctreeLogger(InsureServiceImpl.class.getName());
 
 	@Autowired
 	InsureMapper insureMapper;
