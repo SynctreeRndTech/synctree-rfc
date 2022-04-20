@@ -1,4 +1,4 @@
-package com.synctree.controller;
+package com.synctree;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +13,7 @@ public class SynctreeRfcApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SynctreeRfcApplication.class, args);	
-		logger.info("SynctreeRfcApplication Start!!");
+		logger.info("================== SynctreeRfcApplication Started >>>>>>>>>>>>>>>>>>");
 	}
 
 }

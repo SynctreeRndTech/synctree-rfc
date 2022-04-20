@@ -1,4 +1,4 @@
-package com.synctree.util;
+package com.synctree.util.enc;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
