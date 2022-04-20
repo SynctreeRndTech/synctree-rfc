@@ -3,15 +3,14 @@ package com.synctree.controller;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-
 import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.synctree.util.logging.SynctreeLogger;
 
-@org.springframework.web.bind.annotation.RestController
+@RestController
 public class TestController {
 	private static final SynctreeLogger logger = new SynctreeLogger(TestController.class.getName());
 
@@ -120,5 +119,4 @@ public class TestController {
 		logger.info("time-sleep-test successed");
 		return "Hello";
 	}
-
 }

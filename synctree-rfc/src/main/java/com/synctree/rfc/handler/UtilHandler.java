@@ -17,7 +17,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONObject;
 
 import com.synctree.rfc.framework.RfcDTO;
-import com.synctree.util.Aes256Util;
+import com.synctree.util.enc.Aes256Util;
 import com.synctree.util.logging.SynctreeLogger;
 
 public class UtilHandler {
